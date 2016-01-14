@@ -1,0 +1,67 @@
+##########################################################################################
+##########################################################################################
+##########################################################################################
+##########################################################################################
+
+  returns an array of linked objects
+  def link_chain_arr
+    obj_arr = []
+    final_arr = []
+
+    @num_of_attractions.times do |n|
+      if n == 0
+        first_attr = Attraction.new(n, nil, nil, @array_of_distances[ n - 1 ], @array_of_distances[n])
+        obj_arr.push(first_attr)
+      else
+        new_attr = Attraction.new(n, obj_arr[ n - 1 ], nil, @array_of_distances[ n - 1 ], @array_of_distances[n])
+        obj_arr.push(new_attr)
+      end
+    end
+    obj_arr[0].left = obj_arr[-1]
+
+    obj_arr.each do |attraction|
+      index = obj_arr.index(attraction)
+      attraction.right = index == obj_arr.length - 1 ? obj_arr[0] : obj_arr[index + 1]
+    end
+
+    # obj_arr.each do |object|
+    #   puts "#{object.number} this is number"
+    #   puts "#{object.left.number} this is left"
+    #   puts "#{object.right.number} this is next"
+    #   puts "#{object.dist_to_left} this is Distance to left"
+    #   puts "#{object.dist_to_right} this is Distance to next"
+    #   puts
+    # end
+    return obj_arr
+  end
+end
+##########################################################################################
+##########################################################################################
+##########################################################################################
+##########################################################################################
+##########################################################################################
+##########################################################################################
+##########################################################################################
+##########################################################################################
+# def chain_link
+#   @num_of_attractions.times do |n|
+#     if n == 0
+#       @first = Attraction.new(n,
+#                               nil,
+#                               nil,
+#                               @array_of_distances[n - 1],
+#                               @array_of_distances[n])
+#       @last = @first
+#     else
+#       current = Attraction.new(n,
+#                                @last,
+#                                nil,
+#                                @array_of_distances[n - 1],
+#                                @array_of_distances[n])
+#       @last.right = current
+#       @last = current
+#     end
+#   end
+#   @last.right = @first
+#   @first.left = @last
+# end
